@@ -1,0 +1,95 @@
+/* components/AddProductForm.css */
+.add-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.required {
+  color: #f44336;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: var(--bg);
+  color: var(--text-h);
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.form-group input.error,
+.form-group textarea.error {
+  border-color: #f44336;
+}
+
+.error-message {
+  font-size: 12px;
+  color: #f44336;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.form-actions button {
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.form-actions button[type="button"] {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.form-actions button[type="button"]:hover:not(:disabled) {
+  background-color: var(--code-bg);
+}
+
+.form-actions button[type="submit"] {
+  background-color: var(--accent);
+  border: none;
+  color: white;
+}
+
+.form-actions button[type="submit"]:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.form-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
