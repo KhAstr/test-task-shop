@@ -1,74 +1,165 @@
-# React + TypeScript + Vite
+# Тестовое задание в компанию Aiti Guru
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Deploy](https://img.shields.io/badge/Демо-test--task--shop--zeta.vercel.app-blue?style=for-the-badge&logo=vercel)](https://test-task-shop-zeta.vercel.app/)
 
-Currently, two official plugins are available:
+## 📋 О проекте
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**Административная панель управления товарами** с авторизацией, поиском, сортировкой и пагинацией.
 
-## React Compiler
+### 🔑 Тестовые данные для входа
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Поле      | Значение       |
+|-----------|----------------|
+| **Логин** | `emilys`       |
+| **Пароль**| `emilyspass`   |
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Деплой
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+**Живая версия проекта доступна по ссылке:**  
+👉 [https://test-task-shop-zeta.vercel.app/](https://test-task-shop-zeta.vercel.app/)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📚 API
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+| Назначение              | URL                                          |
+|-------------------------|----------------------------------------------|
+| Источник данных         | [DummyJSON Products](https://dummyjson.com/docs/products) |
+| Авторизация             | [DummyJSON Auth](https://dummyjson.com/docs/auth)         |
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-# test-task-shop
+## ✅ Условия выполнения
+
+| Требование                                                      | Статус |
+|-----------------------------------------------------------------|:------:|
+| React (версия 18+)                                              |   ✅   |
+| TypeScript (строгая типизация)                                  |   ✅   |
+| Работоспособность в актуальной версии Google Chrome             |   ✅   |
+
+> **Выбор стейт-менеджера и UI библиотек — на усмотрение разработчика**  
+> *(с возможностью обоснования выбора)*
+
+---
+
+## 🎨 Дизайн
+
+Реализация визуально соответствует макету в **Figma**.
+
+---
+
+## ⚙️ Функциональные требования
+
+### 1. Форма входа
+
+| Требование                                                      | Статус |
+|-----------------------------------------------------------------|:------:|
+| Валидация полей (обязательность заполнения)                     |   ✅   |
+| Обработка ошибок API (уведомление или текст под полями)         |   ✅   |
+
+**Логика запоминания данных:**
+
+| Чекбокс               | Поведение сессии                          |
+|-----------------------|-------------------------------------------|
+| ✅ Установлен         | Токен сохраняется после закрытия браузера |
+| ❌ Не установлен      | Сессия сбрасывается при закрытии вкладки  |
+
+---
+
+### 2. Вывод списка товаров
+
+| Требование                                                      | Статус |
+|-----------------------------------------------------------------|:------:|
+| Соответствие столбцам из макета Figma                           |   ✅   |
+| Прогресс-бар при загрузке                                       |   ✅   |
+| Подгрузка данных из API                                         |   ✅   |
+
+---
+
+### 3. Сортировка
+
+| Требование                                                      | Статус |
+|-----------------------------------------------------------------|:------:|
+| Сортировка по столбцам (цена, рейтинг, наименование, вендор)    |   ✅   |
+| Состояние сортировки сохраняется                                |   ✅   |
+
+---
+
+### 4. Добавление товара
+
+| Требование                                                      | Статус |
+|-----------------------------------------------------------------|:------:|
+| Кнопка "Добавить" → форма с полями (Наименование, цена, вендор, артикул) | ✅ |
+| Toast-уведомление при успешном добавлении                       |   ✅   |
+| Логика сохранения через API **не требуется**                    |   ✅   |
+
+---
+
+### 5. Логика интерфейса
+
+| Требование                                                      | Статус |
+|-----------------------------------------------------------------|:------:|
+| Рейтинг товара ниже 3 → подсветка красным цветом                |   ✅   |
+
+---
+
+### 6. Поиск товаров
+
+| Требование                                                      | Статус |
+|-----------------------------------------------------------------|:------:|
+| Поиск с использованием API                                      |   ✅   |
+
+---
+
+## 🤖 Использование ИИ
+
+> При использовании ИИ для выполнения задания просьба указать модель и промпты.
+
+| Модель                    | Назначение                                      |
+|---------------------------|-------------------------------------------------|
+| **Claude 3.5 Sonnet**     | Генерация кода, рефакторинг, оптимизация       |
+| **Claude 3.5 Sonnet**     | Решение проблем с TypeScript и Zustand         |
+| **Claude 3.5 Sonnet**     | Разработка компонентов (Header, Pagination, Modal, Toast) |
+
+**Примеры промптов:**
+- "Нужно чтобы useProducts возвращал ошибку, если ожидание длится дольше 10 секунд"
+- "Как сделать градиентный border у элемента?"
+- "В ProductsList ошибка Error: Calling setState synchronously within an effect"
+- "Возьми readme и разметь его так, чтобы было красиво"
+
+---
+
+## 🛠️ Технологический стек
+
+| Категория           | Технологии                                                                 |
+|---------------------|----------------------------------------------------------------------------|
+| **Фреймворк**       | React 18                                                                   |
+| **Язык**            | TypeScript                                                                 |
+| **Стейт-менеджер**  | Zustand                                                                    |
+| **Запросы к API**   | TanStack Query (React Query)                                               |
+| **Стили**           | CSS Modules / CSS                                                          |
+| **Роутинг**         | React Router DOM                                                           |
+| **Сборка**          | Vite                                                                       |
+| **Деплой**          | Vercel                                                                     |
+
+---
+
+## 📦 Установка и запуск
+
+```bash
+# Клонирование репозитория
+git clone <repository-url>
+
+# Установка зависимостей
+npm install
+
+# Запуск в режиме разработки
+npm run dev
+
+# Сборка для production
+npm run build
+
+# Предпросмотр production-сборки
+npm run preview
