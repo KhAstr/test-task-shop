@@ -14,7 +14,7 @@ const queryClient = new QueryClient();
 
 function App() {
   const { isAuthenticated, hydrate } = useAuthStore();
-  const { isModalOpen, closeModal, toast } = useUIStore();
+  const { isModalOpen, closeModal } = useUIStore();
 
   useEffect(() => {
     hydrate();

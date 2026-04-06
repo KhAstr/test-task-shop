@@ -4,7 +4,7 @@ import { useUIStore } from "../stores/uiStore";
 import useProductsData from "../hooks/useProductsData";
 import "./Pagination.css";
 
-const Pagination = (): JSX.Element => {
+const Pagination = (): JSX.Element | null => {
     const { page, setPage, limit } = useFiltersStore();
     const { isLoading } = useUIStore();
 
