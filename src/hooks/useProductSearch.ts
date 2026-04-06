@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Product } from "../types/Product";
-import type { SortField, SortOrder } from "./useSorting";
+import type { SortField, SortOrder } from "../types/sorting"; 
 
 interface SearchResponse {
   products: Product[];
@@ -20,7 +20,7 @@ interface UseProductSearchProps {
 export const useProductSearch = ({ 
   searchQuery, 
   page, 
-  limit = 10, 
+  limit = 5, 
   sortField = 'title', 
   sortOrder = 'asc' 
 }: UseProductSearchProps) => {
@@ -43,8 +43,7 @@ export const useProductSearch = ({
         throw new Error("Ошибка загрузки данных");
       }
 
-      const data = await response.json();
-      return data;
+      return response.json();
     },
     enabled: !!searchQuery.trim(),
     staleTime: 2 * 60 * 1000,

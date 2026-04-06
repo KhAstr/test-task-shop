@@ -1,0 +1,18 @@
+.sortable-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sortable-header__label {
+    cursor: pointer;
+}
+
+.sortable-header__icon {
+    display: flex;
+    cursor: pointer;
+}
+
+.sortable-header__icon.reversed svg{
+    transform: rotate(180deg);
+}

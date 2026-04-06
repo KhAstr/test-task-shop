@@ -1,0 +1,39 @@
+.header {
+    padding: 26px 30px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    background-color: #ffffff;
+}
+
+.header__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* gap: 100px; */
+}
+
+.header__title {
+    flex: 1;
+    display: flex;
+}
+
+.header__search {
+    display: flex;
+    flex: 2;
+}
+
+.header__actions {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.header__btn-logout {
+    padding: 8px 20px;
+    color: #ffffff;
+    background-color: var(--accent);
+    border-radius: 6px;
+    border: none;
+    font-family: var(--font-cairo);
+    font-size: 14px;
+}

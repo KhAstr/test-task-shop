@@ -28,7 +28,7 @@
   bottom: -1px;
   background: linear-gradient(to bottom, #EDEDED, #ffffff);
   border-radius: 35px;
-  z-index: -2; /* Граница между фоном и контентом */
+  z-index: -2; 
 }
 
 .login-card::after {
@@ -40,7 +40,7 @@
   bottom: 0;
   background: linear-gradient(#f7f6f6 0%, #ffffff 50%);;
   border-radius: 34px;
-  z-index: -1; /* Фон под границей */
+  z-index: -1;
 }
 
 .login-card label {
@@ -232,7 +232,7 @@
 }
 
 .login-button {
-  background: #242EDB;
+  background: var(--accent);
   color: white;
   border: 1px solid #367AFF;
   padding: 14px;
@@ -279,7 +279,7 @@
 }
 
 .signup-link a {
-  color: #242EDB;
+  color: var(--accent);
   /* text-decoration: none; */
   font-weight: 600;
   margin-left: 8px;
@@ -289,7 +289,6 @@
   text-decoration: underline;
 } */
 
-/* Адаптивность */
 @media (max-width: 480px) {
   .login-card {
     padding: 32px 24px;

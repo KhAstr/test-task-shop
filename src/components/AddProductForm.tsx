@@ -1,15 +1,11 @@
-// components/AddProductForm.tsx
 import { useState, type JSX } from "react";
+import { useUIStore } from "../stores/uiStore";
 import type { AddProduct } from "../types/Product";
 import "./AddProductForm.css";
 
-interface AddProductFormProps {
-  onSubmit: (product: AddProduct) => void;
-  onCancel: () => void;
-  isLoading?: boolean;
-}
-
-const AddProductForm = ({ onSubmit, onCancel, isLoading = false }: AddProductFormProps): JSX.Element => {
+const AddProductForm = (): JSX.Element => {
+  const { closeModal, showToast, isLoading } = useUIStore();
+  
   const [formData, setFormData] = useState({
     title: "",
     price: "",
@@ -46,7 +42,7 @@ const AddProductForm = ({ onSubmit, onCancel, isLoading = false }: AddProductFor
     
     if (!validate()) return;
     
-    onSubmit({
+    const newProduct: AddProduct = {
       title: formData.title.trim(),
       price: Number(formData.price),
       brand: formData.brand.trim() || "Без бренда",
@@ -54,6 +50,21 @@ const AddProductForm = ({ onSubmit, onCancel, isLoading = false }: AddProductFor
       category: formData.category.trim() || "other",
       rating: formData.rating ? Number(formData.rating) : 0,
       description: formData.description.trim() || "",
+    };
+    
+    console.log("Добавлен товар:", newProduct);
+    
+    closeModal();
+    showToast(`Товар "${newProduct.title}" успешно добавлен!`, 'success');
+    
+    setFormData({
+      title: "",
+      price: "",
+      brand: "",
+      sku: "",
+      category: "",
+      rating: "",
+      description: "",
     });
   };
 
@@ -64,6 +75,20 @@ const AddProductForm = ({ onSubmit, onCancel, isLoading = false }: AddProductFor
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: "" }));
     }
+  };
+
+  const handleCancel = () => {
+    closeModal();
+    setFormData({
+      title: "",
+      price: "",
+      brand: "",
+      sku: "",
+      category: "",
+      rating: "",
+      description: "",
+    });
+    setErrors({});
   };
 
   return (
@@ -177,7 +202,7 @@ const AddProductForm = ({ onSubmit, onCancel, isLoading = false }: AddProductFor
       </div>
 
       <div className="form-actions">
-        <button type="button" onClick={onCancel} disabled={isLoading}>
+        <button type="button" onClick={handleCancel} disabled={isLoading}>
           Отмена
         </button>
         <button type="submit" disabled={isLoading}>

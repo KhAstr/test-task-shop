@@ -1,3 +1,12 @@
+.app {
+  background-color: #f6f6f6;
+}
+
+.app__main {
+  padding: 0 30px;
+  background-color: #ffffff;
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;

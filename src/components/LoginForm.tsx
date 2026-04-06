@@ -1,106 +1,76 @@
-import { useState, useEffect, type JSX, type FormEvent } from "react";
-import "./LoginForm.css";
+import { useState, type FormEvent } from 'react';
+import { useAuthStore } from '../stores/authStore';
+import { useUIStore } from '../stores/uiStore';
+import './LoginForm.css';
 
-interface LoginFormProps {
-  onLoginSuccess: (token: string) => void;
-}
-
-const LoginForm = ({ onLoginSuccess }: LoginFormProps): JSX.Element => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const LoginForm = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<{ username?: string; password?: string; general?: string }>({});
 
-  useEffect(() => {
-    const savedUsername = localStorage.getItem("savedUsername");
-    const savedRememberMe = localStorage.getItem("rememberMe") === "true";
-
-    if (savedRememberMe && savedUsername) {
-      setUsername(savedUsername);
-      setRememberMe(true);
-    }
-  }, []);
+  const login = useAuthStore((state) => state.login);
+  const setLoading = useUIStore((state) => state.setLoading);
+  const showToast = useUIStore((state) => state.showToast);
+  const isLoading = useUIStore((state) => state.isLoading);
 
   const validate = (): boolean => {
     const newErrors: { username?: string; password?: string } = {};
-
+    
     if (!username.trim()) {
-      newErrors.username = "Логин обязателен для заполнения";
+      newErrors.username = 'Логин обязателен для заполнения';
     }
-
     if (!password) {
-      newErrors.password = "Пароль обязателен для заполнения";
+      newErrors.password = 'Пароль обязателен для заполнения';
     }
-
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
     if (!validate()) return;
-
-    setIsLoading(true);
+    
+    setLoading(true);
     setErrors({});
-
+    
     try {
-      const response = await fetch("https://dummyjson.com/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const response = await fetch('https://dummyjson.com/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           username: username.trim(),
-          password: password,
+          password,
           expiresInMins: rememberMe ? 30 : 1,
         }),
       });
-
+      
       const data = await response.json();
-
+      
       if (!response.ok) {
-        throw new Error(data.message || "Ошибка авторизации");
+        throw new Error(data.message || 'Ошибка авторизации');
       }
-
-      if (rememberMe) {
-        localStorage.setItem("token", data.accessToken);
-        localStorage.setItem("refreshToken", data.refreshToken);
-        localStorage.setItem("savedUsername", username.trim());
-        localStorage.setItem("rememberMe", "true");
-      } else {
-        sessionStorage.setItem("token", data.accessToken);
-        sessionStorage.setItem("refreshToken", data.refreshToken);
-        localStorage.removeItem("savedUsername");
-        localStorage.removeItem("rememberMe");
-      }
-
+      
       const userInfo = {
         id: data.id,
         username: data.username,
         email: data.email,
         firstName: data.firstName,
         lastName: data.lastName,
-        gender: data.gender,
         image: data.image,
       };
-
-      if (rememberMe) {
-        localStorage.setItem("user", JSON.stringify(userInfo));
-      } else {
-        sessionStorage.setItem("user", JSON.stringify(userInfo));
-      }
-
-      onLoginSuccess(data.accessToken);
-
+      
+      login(data.accessToken, userInfo, rememberMe);
+      showToast('Добро пожаловать!', 'success');
+      
     } catch (error) {
       setErrors({
-        general: error instanceof Error ? error.message : "Ошибка соединения с сервером",
+        general: error instanceof Error ? error.message : 'Ошибка соединения с сервером',
       });
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 

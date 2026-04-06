@@ -1,56 +1,45 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import LoginForm from './components/LoginForm';
 import ProductsList from './components/ProductsList';
-import './App.css'
+import Header from './components/Header';
+import Modal from './components/Modal';
+import AddProductForm from './components/AddProductForm';
+import Toast from './components/Toast';
+import { useAuthStore } from './stores/authStore';
+import { useUIStore } from './stores/uiStore';
+import './App.css';
 
 const queryClient = new QueryClient();
 
-const getInitialAuthState = () => {
-  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-  return {
-    isAuthenticated: !!token,
-    token: token
-  };
-};
-
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => getInitialAuthState().isAuthenticated);
-  const [token, setToken] = useState<string | null>(() => getInitialAuthState().token);
+  const { isAuthenticated, hydrate } = useAuthStore();
+  const { isModalOpen, closeModal, toast } = useUIStore();
 
-  const handleLoginSuccess = (newToken: string) => {
-    setToken(newToken);
-    setIsAuthenticated(true);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('user');
-    localStorage.removeItem('savedUsername');
-    localStorage.removeItem('rememberMe');
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('refreshToken');
-    sessionStorage.removeItem('user');
-    
-    setToken(null);
-    setIsAuthenticated(false);
-  };
+  useEffect(() => {
+    hydrate();
+  }, [hydrate]);
 
   if (!isAuthenticated) {
-    return <LoginForm onLoginSuccess={handleLoginSuccess} />;
+    return <LoginForm />;
   }
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="app-container">
-        <button onClick={handleLogout} className="logout-button">
-          Выйти
-        </button>
-        <ProductsList />
+      <div className="app">
+        <Header />
+        <main className="app__main">
+          <ProductsList />
+        </main>
+
+        <Modal isOpen={isModalOpen} onClose={closeModal} title="Добавление товара">
+          <AddProductForm />
+        </Modal>
+
+        <Toast />
       </div>
     </QueryClientProvider>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -1,31 +1,31 @@
-import { useEffect, type JSX } from "react";
+import { useEffect } from "react";
+import { useUIStore } from "../stores/uiStore";
 import "./Toast.css";
 
-interface ToastProps {
-  message: string;
-  type?: "success" | "error" | "info";
-  duration?: number;
-  onClose: () => void;
-}
+const Toast = () => {
+  const { toast, hideToast } = useUIStore();
 
-const Toast = ({ message, type = "success", duration = 3000, onClose }: ToastProps): JSX.Element => {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      onClose();
-    }, duration);
+    if (toast) {
+      const timer = setTimeout(() => {
+        hideToast();
+      }, 3000);
 
-    return () => clearTimeout(timer);
-  }, [duration, onClose]);
+      return () => clearTimeout(timer);
+    }
+  }, [toast, hideToast]);
+
+  if (!toast) return null;
 
   return (
-    <div className={`toast toast--${type}`}>
+    <div className={`toast toast--${toast.type}`}>
       <span className="toast__icon">
-        {type === "success" && "✓"}
-        {type === "error" && "✗"}
-        {type === "info" && "!"}
+        {toast.type === "success" && "✓"}
+        {toast.type === "error" && "✗"}
+        {toast.type === "info" && "!"}
       </span>
-      <span className="toast__message">{message}</span>
-      <button className="toast__close" onClick={onClose}>×</button>
+      <span className="toast__message">{toast.message}</span>
+      <button className="toast__close" onClick={hideToast}>×</button>
     </div>
   );
 };

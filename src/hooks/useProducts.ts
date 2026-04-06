@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import fetchTimeout from "../utils/fetchTimeout";
-import type { SortField, SortOrder } from "./useSorting";
+import type { SortField, SortOrder } from "../types/sorting"; 
 
 interface UseProductsProps {
   limit?: number;
@@ -16,7 +16,6 @@ const useProducts = ({ limit = 30, skip = 0, sortField = 'title', sortOrder = 'a
       const url = `https://dummyjson.com/products?limit=${limit}&skip=${skip}&sortBy=${sortField}&order=${sortOrder}`;
       const response = await fetchTimeout(url, {}, 10000);
       if (!response.ok) {
-        console.log('Network response was not ok');
         throw new Error('Network response was not ok');
       }
       return response.json();
