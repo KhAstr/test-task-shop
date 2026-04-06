@@ -93,7 +93,7 @@ const ProductsList = () => {
                 <>
                     <div className="products-headers">
                         <div className="products-headers__checkbox">
-                            <label className="checkbox-label">
+                            <label className="products-checkbox-label">
                                 <input
                                     type="checkbox"
                                     // checked={selectAll}
@@ -160,7 +160,7 @@ const ProductsList = () => {
                                 return (
                                     <li key={product.id} className="products-list__item list-item">
                                         <div className="list-item__checkbox">
-                                            <label className="checkbox-label">
+                                            <label className="products-checkbox-label">
                                                 <input
                                                     type="checkbox"
                                                     // checked={isSelected}
